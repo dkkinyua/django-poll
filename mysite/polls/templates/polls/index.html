@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Polls</title>
+</head>
+<body>
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li>
+                    <a href="/polls/{{ question.id }}">{{ question.question }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>No polls are available now, try later</h3>
+    {% endif %}
+</body>
+</html>
