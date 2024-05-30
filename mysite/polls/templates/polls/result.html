@@ -6,6 +6,9 @@
     <title>Django Polls</title>
 </head>
 <body>
-    {{ choice.votes }}
+    <h2>{{ question.question }}</h2>
+    {% for choice in question.choice_text.all %} <!-- vote{{ choice.votes|pluralize }} increments the votes with s -->
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
 </body>
 </html>
