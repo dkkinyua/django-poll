@@ -6,11 +6,11 @@ from .models import Question
 
 def index(request):
     latest_question_list = Question.objects.order_by("-pub_date")[:5] # Returns the first 5 questions
-    template = loader.get_template("polls/index.html")
+    # template = loader.get_template("polls/index.html"), we no longer need loader as we'll use render()
     context = {
         "latest_question_list": latest_question_list # Returns latest_question_list as a Python object to use
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, "polls/index.html", context)
 
 def detail(request, question_id):
     return HttpResponse("You are looking at question %s" % question_id)
