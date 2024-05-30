@@ -7,12 +7,21 @@
 </head>
 <body>
     <div>
-        <h2>{{ question.question }}</h2> <!-- Displays the question at hand -->
-        <ul>
-            {% for choice in question.choice_set.all %} <!-- Loops through the choices in the question -->
-                <li>{{ choice.choice_text }}</li> <!-- Shows each choice in a bulleted list -->
-            {% endfor %}
-        </ul>
+        <!-- A form to vote on our poll app -->
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %} <!-- Protects data from forgeries etc -->
+            <fieldset>
+                <legend>{{ question.question }}</legend>
+                {% if error_message %} <small>{{ error_message }}</small> {% endif %}
+                {% for choice in question.choice_set.all %}
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id}}">
+                    <label for="choice{{ forloop.counter }}">
+                        {{ choice.choice_text }}
+                    </label>
+                {% endfor %}
+            </fieldset>
+            <input type="submit" name="Vote">
+        </form>
     </div>
 </body>
 </html>
