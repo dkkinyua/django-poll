@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Polls</title>
+</head>
+<body>
+    <div>
+        <h2>{{ question.question }}</h2> <!-- Displays the question at hand -->
+        <ul>
+            {% for choice in question.choice_set.all %} <!-- Loops through the choices in the question -->
+                <li>{{ choice.choice_text }}</li> <!-- Shows each choice in a bulleted list -->
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404
 from .models import Question
 # Create your views here.
 
@@ -13,7 +12,8 @@ def index(request):
     return render(request, "polls/index.html", context)
 
 def detail(request, question_id):
-    return HttpResponse("You are looking at question %s" % question_id)
+    question = get_object_or_404(Question, pk=question_id) # Gets the requested object, or returns a 404 error
+    return render(request, "polls/detail.html", {"question": question}) # Same as context = {"question": question}
 
 def result(request, question_id):
     response = "You are looking at the results for question %s"
