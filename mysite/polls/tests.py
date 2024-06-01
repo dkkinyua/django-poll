@@ -1,6 +1,7 @@
 import datetime
 from django.test import TestCase
 from django.utils import timezone
+from django.urls import reverse
 from .models import Question
 
 # Create your tests here.
@@ -23,3 +24,15 @@ class QuestionModelTests(TestCase):
         new_question = Question(pub_date = time)
 
         self.assertIs(new_question.was_published_recently(), True)
+
+def create_question(question_text, days):
+    # creates a question based on the above arguments and this helps us avoid writing too much code by using the DRY principle
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question=question_text, pub_date = time)
+
+class QuestionIndexViewsTexts(TestCase):
+    # Checks if there are polls, if not return appropriate message
+    def test_no_questions(self):
+        response = self.client.get(reverse("polls:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No polls are available now, try later")
