@@ -43,7 +43,7 @@ class QuestionIndexViewsTexts(TestCase):
         response = self.client.get(reverse("polls:index"))
 
         self.assertQuerySetEqual(
-            response.content["latest_question_list"],
+            response.context["latest_question_list"],
             [question]
         )
 
@@ -54,6 +54,6 @@ class QuestionIndexViewsTexts(TestCase):
 
         self.assertContains(response, "No polls are available now, try later")
         self.assertQuerySetEqual(
-            response.context["latest_question_poll"],
+            response.context["latest_question_list"],
             []
         )
