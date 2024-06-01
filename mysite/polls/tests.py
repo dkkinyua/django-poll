@@ -50,8 +50,11 @@ class QuestionIndexViewsTexts(TestCase):
     # Checks if the question is in the future, NB: Future questions are not displayed on the index page
     def test_future_question(self):
         question = create_question(question_text="Future question", days=30)
-        response = self.client.get(reverse("polls:index"))
+        url = reverse("polls:detail", args=(question.id,))
+        response = self.client.get(url)
 
+
+        self.assertEqual(response.status_code, 404)
         self.assertContains(response, "No polls are available now, try later")
         self.assertQuerySetEqual(
             response.context["latest_question_list"],
