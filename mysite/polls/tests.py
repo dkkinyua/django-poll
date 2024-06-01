@@ -36,3 +36,13 @@ class QuestionIndexViewsTexts(TestCase):
         response = self.client.get(reverse("polls:index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No polls are available now, try later")
+
+    # Checks if the question is in the past
+    def test_past_question(self):
+        question = create_question(question_text = "Past Question", days=-30)
+        response = self.client.get(reverse("polls:index"))
+
+        self.assertQuerySetEqual(
+            response.content["latest_question_list"],
+            [question]
+        )
