@@ -3,7 +3,7 @@ from .models import Choice, Question
 
 # Register your models here.
 # Makes the poll app modifiable from the admin interface by registering our model here into the site
-class ChoiceInline(admin.StackedInline):
+class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3 # Adds three extra columns for our choices every time we access a question
 
